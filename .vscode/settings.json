@@ -1,0 +1,9 @@
+{
+  "azureFunctions.deploySubpath": "IOC_azure.zip",
+  "azureFunctions.pythonVenv": ".env",
+  "azureFunctions.projectLanguage": "Python",
+  "azureFunctions.projectRuntime": "~2",
+  "debug.internalConsoleOptions": "neverOpen",
+  "azureFunctions.preDeployTask": "func: pack --build-native-deps",
+  "python.pythonPath": ".env\\Scripts\\python.exe"
+}

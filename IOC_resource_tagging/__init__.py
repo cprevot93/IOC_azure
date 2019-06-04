@@ -26,15 +26,17 @@ def tag_compromised_vm(compute_client, network_client, group_name, location, ip,
             {
               'location': location,
               'tags': tags
-           }
+            }
           )
           async_vm_update.wait()
+          return True
       except:
         raise
+  return False
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
-  logging.info('Python HTTP trigger function processed a request.')
+  logging.info('Python HTTP trigger function processed a request')
   tag = "quarantine"
 
   try:
@@ -67,14 +69,18 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
       status_code=400
     )
 
-  credentials = ServicePrincipalCredentials(client_id=client_id, secret=secret, tenant=tenant)
-
-  network_client = NetworkManagementClient(credentials, sub_id)
-  compute_client = ComputeManagementClient(credentials, sub_id)
-
   try:
-    tag_compromised_vm(compute_client, network_client, group_name, location, ip, tag)
-  except Exception as _e:
-    return func.HttpResponse(_e.args)
+    credentials = ServicePrincipalCredentials(client_id=client_id, secret=secret, tenant=tenant)
 
-  return func.HttpResponse("Tag added")
+    network_client = NetworkManagementClient(credentials, sub_id)
+    compute_client = ComputeManagementClient(credentials, sub_id)
+
+    if(tag_compromised_vm(compute_client, network_client, group_name, location, ip, tag)):
+      return func.HttpResponse("Tag added")
+
+  except Exception as _e:
+    logging.debug(str(_e.args))
+    return func.HttpResponse(_e.args, status_code=500)
+
+  logging.info("IP address not found in " + group_name)
+  return func.HttpResponse("IP address not found", status_code=409)

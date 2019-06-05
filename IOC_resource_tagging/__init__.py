@@ -78,9 +78,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     if(tag_compromised_vm(compute_client, network_client, group_name, location, ip, tag)):
       return func.HttpResponse("Tag added")
 
-  except Exception as _e:
-    logging.debug(str(_e.args))
-    return func.HttpResponse(_e.args, status_code=500)
+  except Exception as e:
+    logging.debug(str(e))
+    return func.HttpResponse(str(e), status_code=500)
 
   logging.info("IP address not found in " + group_name)
   return func.HttpResponse("IP address not found", status_code=409)

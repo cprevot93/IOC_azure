@@ -50,8 +50,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     location = req_body.get('location')
     tag = req_body.get('tag')
 
-    # if not (client_id and tenant and sub_id and ip and group_name and location):
-    #   raise ValueError()
 
   except ValueError:
     logging.info(req.get_body())
@@ -82,5 +80,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.debug(str(e))
     return func.HttpResponse(str(e), status_code=500)
 
-  logging.info("IP address not found in " + group_name)
-  return func.HttpResponse("IP address not found", status_code=409)
+  res = "IP address " + ip + " not found in " + group_name
+  logging.info(res)
+  return func.HttpResponse(res, status_code=409)

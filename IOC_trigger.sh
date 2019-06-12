@@ -2,6 +2,10 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+usage() {
+  echo "Usage: ${0} <url> <tenant> <client_id> <secret> <subcription_id> <resourceGroup> <location>" 1>&2
+}
+
 if [ "$#" -ne 7 ]; then
   usage
   exit 1
@@ -15,10 +19,6 @@ groupName=""
 location=""
 tag="quarantine"
 functionapp_url=""
-
-usage() {
-  echo "Usage: ${0} <url> <tenant> <client_id> <secret> <subcription_id> <resourceGroup> <location>" 1>&2
-}
 
 json=\\"{ \\\"tenant\\\": ${tenant},\
   \\\"client_id\\\": ${client_id},\
@@ -51,4 +51,4 @@ config="config system automation-trigger\n\
     set action \"Addquarantine_azure\"\n\
   end"
 
-echo "${config}"
+echo -e "${config}"

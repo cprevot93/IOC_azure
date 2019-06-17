@@ -9,7 +9,7 @@ IFS=$'\n\t'
 
 tenant="942b80cd-1b14-42a1-8dcf-4b21dece61ba"
 client_id="134d90cf-4395-4998-a4b4-b037af9f78e3"
-secret="85aJ.=./0hV1N.5uP=1XxiuP1nMo6H/v"
+secret=""
 sub_id="cf72478e-c3b0-4072-8f60-41d037c1d9e9"
 groupName="cprevot-DemoSDN"
 location="francecentral"
